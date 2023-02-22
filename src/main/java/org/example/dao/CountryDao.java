@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -67,6 +68,24 @@ public class CountryDao {
         Integer offset = (pageNo - 1) * PAGE_SIZE;
         params.put("offset", offset);
         params.put("size", PAGE_SIZE);
+
+
+// SOUT SOUT SOUT
+        System.out.println("Params: {}"+ params.toString());
+        System.out.println(SELECT_CLAUSE
+                + " WHERE 1 = 1 "
+                + (!StringUtils.isEmpty((String)params.get("search")) ? SEARCH_WHERE_CLAUSE : "")
+                + (!StringUtils.isEmpty((String)params.get("continent")) ? CONTINENT_WHERE_CLAUSE : "")
+                + (!StringUtils.isEmpty((String)params.get("region")) ? REGION_WHERE_CLAUSE : "")
+                + " ORDER BY c.code "
+                + "  LIMIT :offset , :size ");
+
+
+
+
+
+
+
         return namedParameterJdbcTemplate.query(SELECT_CLAUSE
                         + " WHERE 1 = 1 "
                         + (!StringUtils.isEmpty((String)params.get("search"))
@@ -79,6 +98,30 @@ public class CountryDao {
                 params, new CountryRowMapper());
     }
 
+
+
+
+    public int getCountriesCount(Map<String, Object> params) {
+        return namedParameterJdbcTemplate.queryForObject(
+                "SELECT COUNT(*) FROM country c"
+                        + " WHERE 1 = 1 "
+                        + (!StringUtils.isEmpty((String)params.get("search"))
+                        ? SEARCH_WHERE_CLAUSE : "")
+                        + (!StringUtils.isEmpty((String)params.get("continent"))
+                        ? CONTINENT_WHERE_CLAUSE : "")
+                        + (!StringUtils.isEmpty((String)params.get("region"))
+                        ? REGION_WHERE_CLAUSE : ""),
+                params, Integer.class);
+    }
+
+
+//    get a specific country
+    public Country getCountryDetail(String code){
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("code", code);
+
+        return namedParameterJdbcTemplate.queryForObject(SELECT_CLAUSE + " WHERE c.code = :code", params, new CountryRowMapper());
+    }
 
 
 

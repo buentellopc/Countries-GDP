@@ -31,6 +31,7 @@ public class CountryDAOTest {
 
     @Before
     public void setup() {
+        // this is like making passing the template to abstract it and make use of it
         countryDao.setNamedParameterJdbcTemplate(namedParamJdbcTemplate);
     }
 
@@ -40,5 +41,14 @@ public class CountryDAOTest {
         //AssertJ assertions
         //Paginated List, so should have 20 entries
         assertThat(countries).hasSize(2540);
+    }
+
+    @Test
+    public void testGetCountryDetail(){
+        Country countryDetail = countryDao.getCountryDetail("MEX");
+
+        System.out.println("COUNTRY DETAIL");
+        System.out.println(countryDetail);
+
     }
 }
