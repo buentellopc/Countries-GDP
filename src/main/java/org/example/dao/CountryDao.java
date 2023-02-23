@@ -61,7 +61,7 @@ public class CountryDao {
 
 
     public List<Country> getCountries(Map<String, Object> params){
-        int pageNo = 1;
+        int pageNo = 5;
         if ( params.containsKey("pageNo") ) {
             pageNo = Integer.parseInt(params.get("pageNo").toString());
         }
@@ -123,6 +123,40 @@ public class CountryDao {
         return namedParameterJdbcTemplate.queryForObject(SELECT_CLAUSE + " WHERE c.code = :code", params, new CountryRowMapper());
     }
 
+    public void editCountryDetail(String code, Country country) {
+        namedParameterJdbcTemplate.update(" UPDATE country SET "
+                        + " name = :name, "
+                        + " localname = :localName, "
+                        + " capital = :capital, "
+                        + " continent = :continent, "
+                        + " region = :region, "
+                        + " HeadOfState = :headOfState, "
+                        + " GovernmentForm = :governmentForm, "
+                        + " IndepYear = :indepYear, "
+                        + " SurfaceArea = :surfaceArea, "
+                        + " population = :population, "
+                        + " LifeExpectancy = :lifeExpectancy "
+                        + "WHERE Code = :code ",
+                getCountryAsMap(code, country));
+    }
+
+    // TODO: 2/22/23 object will from map is the one to be updated by editCountryDetail
+    private Map<String, Object> getCountryAsMap(String code, Country country){
+        Map<String, Object> countryMap = new HashMap<String, Object>();
+        countryMap.put("name", country.getName());
+        countryMap.put("localName", country.getLocalName());
+        countryMap.put("capital", country.getCapital().getId());
+        countryMap.put("continent", country.getContinent());
+        countryMap.put("region", country.getRegion());
+        countryMap.put("headOfState", country.getHeadOfState());
+        countryMap.put("governmentForm", country.getGovernmentForm());
+        countryMap.put("indepYear", country.getIndepYear());
+        countryMap.put("surfaceArea", country.getSurfaceArea());
+        countryMap.put("population", country.getPopulation());
+        countryMap.put("lifeExpectancy", country.getLifeExpectancy());
+        countryMap.put("code", code);
+        return countryMap;
+    }
 
 
 
