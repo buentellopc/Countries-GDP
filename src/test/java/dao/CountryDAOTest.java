@@ -33,7 +33,7 @@ public class CountryDAOTest {
 
     @Before
     public void setup() {
-        // this is like making passing the template to abstract it and make use of it
+        // this is like passing the template to abstract it and make use of it
         countryDao.setNamedParameterJdbcTemplate(namedParamJdbcTemplate);
     }
 
@@ -51,6 +51,8 @@ public class CountryDAOTest {
         params.put("continent", "Africa");
 
         List<Country> continentCountries = countryDao.getCountries(params);
+
+        // Traverse all the elements from the list, test that each has the value of Africa as Continent, because of pagination expected result should be 20
         long actualContinentCount = continentCountries.stream().filter(country -> country.getContinent().equals("Africa")).count();
 
         assertThat(actualContinentCount).isEqualTo(20);
