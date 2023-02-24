@@ -14,6 +14,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -44,6 +46,16 @@ public class CountryDAOTest {
     }
 
     @Test
+    public void testGetCountriesCount(){
+        // testing can be comprised in three steps: preconditions,  actions to follow, validation of results
+        Map<String, Object> params = new HashMap<>();
+//        params.put("continent", "Europe");
+        int countriesCount = countryDao.getCountriesCount(params);
+        assertThat(countriesCount).isEqualTo(239);
+
+    }
+
+    @Test
     public void testGetCountryDetail(){
         Country countryDetail = countryDao.getCountryDetail("MEX");
         assertThat(countryDetail).isNotNull();
@@ -65,6 +77,9 @@ public class CountryDAOTest {
 
         countryToEdit = countryDao.getCountryDetail("MEX");
         assertThat(countryToEdit.getName()).isEqualTo("THISWASEDITEDOHNO!");
-
     }
+
+
+
+
 }

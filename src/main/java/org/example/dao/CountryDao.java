@@ -61,7 +61,7 @@ public class CountryDao {
 
 
     public List<Country> getCountries(Map<String, Object> params){
-        int pageNo = 5;
+        int pageNo = 1;
         if ( params.containsKey("pageNo") ) {
             pageNo = Integer.parseInt(params.get("pageNo").toString());
         }
