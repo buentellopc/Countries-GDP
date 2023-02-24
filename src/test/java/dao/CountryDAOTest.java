@@ -46,6 +46,18 @@ public class CountryDAOTest {
     }
 
     @Test
+    public void testGetCountries_searchByContinent() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("continent", "Africa");
+
+        List<Country> continentCountries = countryDao.getCountries(params);
+        long actualContinentCount = continentCountries.stream().filter(country -> country.getContinent().equals("Africa")).count();
+
+        assertThat(actualContinentCount).isEqualTo(20);
+    }
+
+
+    @Test
     public void testGetCountriesCount(){
         // testing can be comprised in three steps: preconditions,  actions to follow, validation of results
         Map<String, Object> params = new HashMap<>();
