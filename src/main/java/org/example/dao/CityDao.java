@@ -43,7 +43,17 @@ public class CityDao {
     }
 
 
-    
+    public City getCityDetail(Long cityId) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("id", cityId);
+        return namedParameterJdbcTemplate.queryForObject("SELECT id, "
+                        + " name, countrycode country_code, "
+                        + " district, population "
+                        + " FROM city WHERE id = :id",
+                params, new CityRowMapper());
+    }
+
+
 
 
 

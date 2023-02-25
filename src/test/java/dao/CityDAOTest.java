@@ -52,4 +52,13 @@ public class CityDAOTest {
         assertThat(cities.size()).isEqualTo(250);
 
     }
+
+    @Test
+    public void testGetCityDetail(){
+
+        City cityDetail = cityDao.getCityDetail(207L);
+
+        assertThat(cityDetail.getName()).isEqualTo("Rio de Janeiro");
+
+    }
 }
