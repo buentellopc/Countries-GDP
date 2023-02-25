@@ -1,4 +1,5 @@
 package dao;
+import org.example.model.Country;
 
 import config.TestDBConfiguration;
 import org.example.dao.CityDao;
@@ -49,7 +50,7 @@ public class CityDAOTest {
 
         // TODO: 2/24/23 interesting way of pass null  
         List<City> cities = cityDao.getCities("BRA");
-        assertThat(cities.size()).isEqualTo(250);
+        assertThat(cities.size()).isEqualTo(251);
 
     }
 
@@ -61,4 +62,29 @@ public class CityDAOTest {
         assertThat(cityDetail.getName()).isEqualTo("Rio de Janeiro");
 
     }
+
+
+    @Test
+    public void testAddCity(){
+
+        City fooCity = new City();
+//        fooCity.setId(0L);
+        fooCity.setName("foodejaneiro");
+        fooCity.setCountryCode("BRA");
+//        fooCity.setCountry(new Country());
+        fooCity.setDistrict("foodejaneiro");
+        fooCity.setPopulation(0L);
+
+
+        Long newCityID = cityDao.addCity("BRA", fooCity);
+        assertThat(newCityID).isNotNull();
+
+        City cityFromDB = cityDao.getCityDetail(newCityID);
+
+        // the city retrieved from db should be equal to the one you set earlier
+        assertThat(cityFromDB.getName()).isEqualTo("foodejaneiro");
+
+    }
+
+
 }

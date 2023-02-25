@@ -5,7 +5,11 @@ import lombok.Setter;
 import org.example.dao.mapper.CityRowMapper;
 import org.example.model.City;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -54,9 +58,30 @@ public class CityDao {
     }
 
 
+    public Long addCity(String countryCode, City city) {
 
+        SqlParameterSource paramSource = new MapSqlParameterSource(
+                getMapForCity(countryCode, city));
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        namedParameterJdbcTemplate.update("INSERT INTO city("
+                        + " name, countrycode, "
+                        + " district, population) "
+                        + " VALUES (:name, :country_code, "
+                        + " :district, :population )",
+                paramSource, keyHolder);
+        return keyHolder.getKey().longValue();
+    }
 
+    private Map<String,?> getMapForCity(String countryCode, City city) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("name", city.getName());
+        map.put("country_code", countryCode);
+        map.put("district", city.getDistrict());
+        map.put("population", city.getPopulation());
 
+        System.out.println("THE NAME FROM THE NEW CITY IS: " + map.get("name"));
+        return map;
+    }
 
 
 }
