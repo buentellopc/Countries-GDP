@@ -24,6 +24,7 @@ public class CityDao {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("code", countryCode);
         if ( pageNo != null ) {
+            // TODO: 2/24/23 notice that offset is only relevant here, thanks to the map. A null value is a clever way to get all the cities
             Integer offset = (pageNo - 1) * PAGE_SIZE;
             params.put("offset", offset);
             params.put("size", PAGE_SIZE);
@@ -36,4 +37,16 @@ public class CityDao {
                         + ((pageNo != null) ? " LIMIT :offset , :size " : ""),
                 params, new CityRowMapper());
     }
+
+    public List<City> getCities(String countryCode){
+        return getCities(countryCode, null);
+    }
+
+
+    
+
+
+
+
+
 }

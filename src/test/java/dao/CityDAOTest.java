@@ -43,4 +43,13 @@ public class CityDAOTest {
         assertThat(cities.size()).isEqualTo(20);
 
     }
+
+    @Test
+    public void testGetAllCities(){
+
+        // TODO: 2/24/23 interesting way of pass null  
+        List<City> cities = cityDao.getCities("BRA");
+        assertThat(cities.size()).isEqualTo(250);
+
+    }
 }
