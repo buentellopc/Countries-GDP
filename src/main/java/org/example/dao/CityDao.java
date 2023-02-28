@@ -72,6 +72,12 @@ public class CityDao {
         return keyHolder.getKey().longValue();
     }
 
+    public void deleteCity(Long cityId) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("id", cityId);
+        namedParameterJdbcTemplate.update("DELETE FROM city WHERE id = :id", params);
+    }
+
     private Map<String,?> getMapForCity(String countryCode, City city) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("name", city.getName());

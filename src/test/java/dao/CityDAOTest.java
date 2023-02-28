@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -84,6 +85,31 @@ public class CityDAOTest {
         // the city retrieved from db should be equal to the one you set earlier
         assertThat(cityFromDB.getName()).isEqualTo("foodejaneiro");
 
+    }
+
+
+    @Test(expected = EmptyResultDataAccessException.class)
+    public void testDeleteCity(){
+        Long cityId = addCity();
+        System.out.println("1");
+
+        cityDao.deleteCity(cityId);
+        System.out.println("2");
+
+        City cityFromDB = cityDao.getCityDetail(cityId);
+        System.out.println("cityFromDB is" + cityFromDB);
+        assertThat(cityFromDB).isNull();
+    }
+
+    private Long addCity() {
+        City fooCity = new City();
+//        fooCity.setId(0L);
+        fooCity.setName("foodejaneiro");
+        fooCity.setCountryCode("BRD");
+//        fooCity.setCountry(new Country());
+        fooCity.setDistrict("foodejaneiro");
+        fooCity.setPopulation(0L);
+        return cityDao.addCity("BRA", fooCity);
     }
 
 
