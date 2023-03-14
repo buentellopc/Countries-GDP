@@ -51,6 +51,11 @@
             <version>5.1.5.RELEASE</version>
         </dependency>
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>5.1.5.RELEASE</version>
+        </dependency>
+        <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
             <version>2.7.2</version>
@@ -75,7 +80,11 @@
             <artifactId>spring-test</artifactId>
             <version>5.1.5.RELEASE</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
 
 
     </dependencies>
